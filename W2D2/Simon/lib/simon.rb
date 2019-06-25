@@ -1,6 +1,6 @@
 require "colorize"
 class Simon
-  COLORS = %w(r b g y)
+  COLORS = %w(a t c g)
 
   attr_accessor :sequence_length, :game_over, :seq
 
@@ -11,24 +11,28 @@ class Simon
   end
 
   def play
+    system "clear"
     until self.game_over
       take_turn 
     end
     game_over_message
     reset_game
+    sleep(2)
+    play
   end
 
   def take_turn
     show_sequence
-    guess = []
-    until guess.length == self.sequence_length
-      guess << require_sequence
-    end
-    self.game_over = true if guess != self.seq
+    
+    input = require_sequence
+   
+    self.game_over = true if input != self.seq.join("")
     
     if !game_over
       round_success_message
     end
+    sleep(1)
+    system "clear"
     self.sequence_length += 1
   end
 
@@ -36,17 +40,17 @@ class Simon
     add_random_color
     self.seq.each {|color| 
       case color
-      when "r" 
-        puts "red".colorize(:red)
-      when "b"
-        puts "blue".colorize(:cyan)
+      when "a" 
+        puts "a denine".colorize(:red)
+      when "t"
+        puts "t hymine".colorize(:cyan)
+      when "c"
+        puts "c ytosine".colorize(:green)
       when "g"
-        puts "green".colorize(:green)
-      when "y"
-        puts "yellow".colorize(:yellow)
+        puts "g uanine".colorize(:yellow)
       end
       }
-    sleep(1)
+    sleep(2)
     system "clear"
   end
 
@@ -71,8 +75,8 @@ class Simon
     self.sequence_length = 1
     self.game_over = false
     self.seq.each {|color| puts color}
-    sleep(2)
     self.seq = []
+    
   end
 end
 
